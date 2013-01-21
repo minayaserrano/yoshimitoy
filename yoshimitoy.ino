@@ -1,4 +1,4 @@
-// Sweep
+// Based on Sweep
 // by BARRAGAN <http://barraganstudio.com> 
 // This example code is in the public domain.
 
@@ -26,24 +26,35 @@ void loop()
   for(pos = 10; pos < 100; pos += 1)  // goes from 0 degrees to 180 degrees 
   {                                  // in steps of 1 degree 
     servoh.write(pos);              // tell servo to go to position in variable 'pos' 
-    vpos = pos % 45;
-    Serial.println(pos);
+    if(pos < 45 || pos >= 90) {
+      vpos = pos % 45;
+    }
+    else {
+      vpos = 45 - (pos % 45);
+    }
+    Serial.println(vpos);
     servov.write(vpos);
     delay(50);                       // waits 15ms for the servo to reach the position 
   } 
-
+  
   for(pos = 100; pos>=10; pos-=1)     // goes from 180 degrees to 0 degrees 
   {                                
     servoh.write(pos);              // tell servo to go to position in variable 'pos' 
-    vpos = pos%45;
+    if(pos >= 90 || pos < 45) {
+      vpos = pos % 45;
+    }
+    else {
+      vpos = 45 - (pos % 45);
+    }
     servov.write(vpos);
     delay(50);                       // waits 15ms for the servo to reach the position 
   }
   
   pos = 55;
   vpos = 10;
+  delay(500);
   
-  for (vpos = 10; vpos >=35; vpos += 1)
+  for (vpos = 10; vpos <=35; vpos += 1)
   {
     servov.write(vpos);
     delay(100);
